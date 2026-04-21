@@ -438,50 +438,80 @@ namespace StakeBotUI
             var startJson = await Post("_api/casino/hilo/bet", startBody, ct);
             var (startBet, startErr, startErrType) = ExtractBet(startJson);
 
-            // existingGame: an active round is already open — stop the bot cleanly
-            // so the user can finish it manually via the HiLo card-strip buttons.
-            // We do NOT cashout here; the user decides how to proceed.
+            // Declare shared state for the pattern loop — populated from either the
+            // normal /bet response or the existingGame recovery path below.
+            string lastRank;
+            string lastSuit;
+            string patternDesc = _s.HiloPattern;
+            var cardHistory = new System.Collections.Generic.List<string>();
+            JToken lastBet;
+            bool active;
+
             if (startErr != null && startErrType == "existingGame")
             {
-                _log("[HILO] An active game is already running. Finish it manually via the card strip, then restart the bot.");
-                _shouldStop = true;
-                //Form1 myApp = new Form1();
+                // A transient HTTP error on /bet caused the server to open a round that
+                // we never got a response for. The game is at the start-card stage.
+                // Resume by playing the full pattern from step 0 using "7" as a neutral
+                // default rank (mid-deck — produces valid guesses for all pattern types).
+                LogError("[HILO] Resuming orphaned round after HTTP error — playing pattern from step 0.");
+                lastRank    = "7";
+                lastSuit    = "?";
+                lastBet     = null;
+                active      = true;
+                cardHistory.Add("?");   // placeholder for unknown start card
+            }
+            else
+            {
+                if (startErr != null) return ErrorResult("hilo", startErr, startErrType);
+                if (startBet == null) return MakeResult(null, "hilo");
 
-                // Change the variable
-                Form1.isManual = true;
-                
-                // Return a zero-profit non-error result so the main loop does
-                // NOT set StoppedDueToError and does NOT play the error beep.
-                return new BetResult { Game = "hilo", HasError = false, Win = false, Amount = nextbet, Profit = 0m };
+                active = startBet["active"]?.Value<bool>() ?? false;
+                if (!active) return MakeResult(startBet, "hilo", "start-loss");
+
+                lastRank = startBet["state"]?["startCard"]?["rank"]?.Value<string>() ?? "?";
+                lastSuit = startBet["state"]?["startCard"]?["suit"]?.Value<string>() ?? "?";
+
+                // Fire UI callback for the start card (multiplier <= 1.0 is the signal)
+                _onHiloCard?.Invoke(lastRank, lastSuit, 1.0);
+
+                cardHistory.Add(lastRank);
+                lastBet = startBet;
             }
 
-            if (startErr != null) return ErrorResult("hilo", startErr, startErrType);
-            if (startBet == null) return MakeResult(null, "hilo");
-
-            bool active = startBet["active"]?.Value<bool>() ?? false;
-            if (!active) return MakeResult(startBet, "hilo", "start-loss");
-
-            string lastRank = startBet["state"]?["startCard"]?["rank"]?.Value<string>() ?? "?";
-            string lastSuit = startBet["state"]?["startCard"]?["suit"]?.Value<string>() ?? "?";
-            string patternDesc = _s.HiloPattern;
-
-            // Fire UI callback for the start card (multi <= 1.0 is the signal)
-            _onHiloCard?.Invoke(lastRank, lastSuit, 1.0);
-
-            // Accumulate every card rank revealed — start with the deal card.
-            var cardHistory = new System.Collections.Generic.List<string> { lastRank };
-
-            JToken lastBet = startBet;
-
+            // ── Pattern loop ─────────────────────────────────────────────────
             for (int step = 0; step < _hiloPattern.Length && active; step++)
             {
                 int pNum = _hiloPattern[step];
                 string guess = HiloGuess(pNum, lastRank);
 
-                // Pattern 7 = Skip → send "skip" as the guess to the /next endpoint.
+                // Retry /next on transient HTTP errors (e.g. 502 BadGateway).
+                // The round is still live on the server so resending the same guess is safe.
+                const int maxNextRetries = 8;
+                JToken nextBet     = null;
+                string nextErr     = null;
+                string nextErrType = null;
+                for (int retry = 0; retry <= maxNextRetries; retry++)
+                {
+                    var nextJson = await Post("_api/casino/hilo/next", new { guess }, ct);
+                    (nextBet, nextErr, nextErrType) = ExtractBet(nextJson);
 
-                var nextJson = await Post("_api/casino/hilo/next", new { guess }, ct);
-                var (nextBet, nextErr, nextErrType) = ExtractBet(nextJson);
+                    if (nextErr == null) break; // success
+
+                    bool isHttpError = nextErr.StartsWith("HTTP ", StringComparison.OrdinalIgnoreCase);
+                    if (!isHttpError) break;    // real API error — don't retry
+
+                    if (retry < maxNextRetries)
+                    {
+                        LogError($"[HILO] /next HTTP error ({nextErr}) — retrying {retry + 1}/{maxNextRetries}");
+                        try { await Task.Delay(2000, ct); } catch (OperationCanceledException) { goto hiloNextDone; }
+                    }
+                    else
+                    {
+                        LogError($"[HILO] /next gave up after {maxNextRetries} retries ({nextErr}) — cashing out");
+                    }
+                }
+                hiloNextDone:
+
                 if (nextErr != null)
                 {
                     try { await Post("_api/casino/hilo/cashout", new { identifier = RandId() }, ct); } catch { }
