@@ -450,14 +450,14 @@ namespace StakeBotUI
             if (startErr != null && startErrType == "existingGame")
             {
                 // A transient HTTP error on /bet caused the server to open a round that
-                // we never got a response for. The game is at the start-card stage.
-                // Resume by playing the full pattern from step 0 using "7" as a neutral
-                // default rank (mid-deck — produces valid guesses for all pattern types).
+                // we never got a response for. The game is at the start-card stage with
+                // an unknown start card — force the first /next guess to "equal" (always
+                // valid regardless of which card was dealt), then resume normally.
                 LogError("[HILO] Resuming orphaned round after HTTP error — playing pattern from step 0.");
-                lastRank    = "7";
-                lastSuit    = "?";
-                lastBet     = null;
-                active      = true;
+                lastRank         = "FORCE_EQUAL";   // sentinel consumed by the loop below
+                lastSuit         = "?";
+                lastBet          = null;
+                active           = true;
                 cardHistory.Add("?");   // placeholder for unknown start card
             }
             else
@@ -482,7 +482,10 @@ namespace StakeBotUI
             for (int step = 0; step < _hiloPattern.Length && active; step++)
             {
                 int pNum = _hiloPattern[step];
-                string guess = HiloGuess(pNum, lastRank);
+                // FORCE_EQUAL sentinel: the start card is unknown (orphaned round recovery).
+                // Send "equal" for this step — always a valid guess — then clear the sentinel
+                // so subsequent steps use the real rank returned by the server.
+                string guess = lastRank == "FORCE_EQUAL" ? "equal" : HiloGuess(pNum, lastRank);
 
                 // Retry /next on transient HTTP errors (e.g. 502 BadGateway).
                 // The round is still live on the server so resending the same guess is safe.
