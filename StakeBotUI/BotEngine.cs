@@ -440,25 +440,42 @@ namespace StakeBotUI
 
             // Declare shared state for the pattern loop — populated from either the
             // normal /bet response or the existingGame recovery path below.
-            string lastRank;
-            string lastSuit;
+            string lastRank  = "?";
+            string lastSuit  = "?";
             string patternDesc = _s.HiloPattern;
             var cardHistory = new System.Collections.Generic.List<string>();
-            JToken lastBet;
-            bool active;
+            JToken lastBet  = null;
+            bool active     = false;
 
             if (startErr != null && startErrType == "existingGame")
             {
                 // A transient HTTP error on /bet caused the server to open a round that
-                // we never got a response for. The game is at the start-card stage with
-                // an unknown start card — force the first /next guess to "equal" (always
-                // valid regardless of which card was dealt), then resume normally.
+                // we never got a response for. First try /cashout to close it cleanly.
+                // If cashout fails (round is at start-card stage and cannot be cashed out),
+                // fall back to playing /next with "equal" — always valid regardless of card.
                 LogError("[HILO] Resuming orphaned round after HTTP error — playing pattern from step 0.");
-                lastRank         = "FORCE_EQUAL";   // sentinel consumed by the loop below
-                lastSuit         = "?";
-                lastBet          = null;
-                active           = true;
-                cardHistory.Add("?");   // placeholder for unknown start card
+                bool cashedOut = false;
+                try
+                {
+                    var coJson = await Post("_api/casino/hilo/cashout", new { identifier = RandId() }, ct);
+                    var (coBet, coErr, _) = ExtractBet(coJson);
+                    if (coErr == null && coBet != null)
+                    {
+                        LogError("[HILO] Orphaned round closed via cashout — continuing.");
+                        return MakeResult(coBet, "hilo", "orphan-cashout");
+                    }
+                }
+                catch { }
+
+                if (!cashedOut)
+                {
+                    // Cashout failed — round is at start-card only, must play at least one /next.
+                    lastRank         = "FORCE_EQUAL";   // sentinel consumed by the loop below
+                    lastSuit         = "?";
+                    lastBet          = null;
+                    active           = true;
+                    cardHistory.Add("?");   // placeholder for unknown start card
+                }
             }
             else
             {
