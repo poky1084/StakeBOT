@@ -781,7 +781,7 @@ namespace StakeBotUI
             131072});
             this.nudDiceChance.Location = new System.Drawing.Point(120, 55);
             this.nudDiceChance.Maximum = new decimal(new int[] {
-            9899,
+            9999,
             0,
             0,
             131072});
@@ -2897,7 +2897,7 @@ namespace StakeBotUI
             this.BetDelayNumericUpDown1.Size = new System.Drawing.Size(68, 22);
             this.BetDelayNumericUpDown1.TabIndex = 53;
             this.BetDelayNumericUpDown1.Value = new decimal(new int[] {
-            133,
+            131,
             0,
             0,
             0});

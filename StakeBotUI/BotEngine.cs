@@ -384,7 +384,7 @@ namespace StakeBotUI
         // ── DICE ─────────────────────────────────────────────────────────
         private async Task<BetResult> BetDice(CancellationToken ct)
         {
-            decimal ch = Math.Max(0.01m, Math.Min(98.99m, chance));
+            decimal ch = Math.Max(0.01m, Math.Min(99.99m, chance));
             double target = bethigh ? (double)(100m - ch) : (double)ch;
             string cond = bethigh ? "above" : "below";
             var body = new { target, condition = cond, identifier = RandId(), amount = (double)nextbet, currency = _s.SelectedCurrency };
