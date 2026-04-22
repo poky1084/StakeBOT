@@ -1247,8 +1247,8 @@ namespace StakeBotUI
             else
             {
                 // Switching ON → keep whatever delay the user has set
-                _s.BetDelayMs = Math.Max(128, (int)BetDelayNumericUpDown1.Value);
-                BetDelayNumericUpDown1.Value = 128;
+                _s.BetDelayMs = Math.Max(133, (int)BetDelayNumericUpDown1.Value);
+                BetDelayNumericUpDown1.Value = Math.Max(133, (int)BetDelayNumericUpDown1.Value);
             }
 
             QueueSave(sender, e);
@@ -1265,8 +1265,8 @@ namespace StakeBotUI
             else
             {
                 // Switching ON → keep whatever delay the user has set
-                _s.BetDelayMs = Math.Max(128, (int)BetDelayNumericUpDown1.Value);
-                BetDelayNumericUpDown1.Value = 128;
+                _s.BetDelayMs = Math.Max(133, (int)BetDelayNumericUpDown1.Value);
+                BetDelayNumericUpDown1.Value = Math.Max(133, (int)BetDelayNumericUpDown1.Value);
             }// Update live so the running bot uses the new delay immediately
             QueueSave(sender, e);
         }

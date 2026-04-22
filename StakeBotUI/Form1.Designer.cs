@@ -2897,7 +2897,7 @@ namespace StakeBotUI
             this.BetDelayNumericUpDown1.Size = new System.Drawing.Size(68, 22);
             this.BetDelayNumericUpDown1.TabIndex = 53;
             this.BetDelayNumericUpDown1.Value = new decimal(new int[] {
-            128,
+            133,
             0,
             0,
             0});
