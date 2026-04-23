@@ -69,12 +69,12 @@ namespace StakeBotUI
             {
                 if (control is Label || control is CheckBox || control is Button || control is ComboBox || control is ListView)
                 {
-                    control.Font = new Font(pfc.Families[0], 9, FontStyle.Regular);
+                    //ontrol.Font = new Font(pfc.Families[0], 9, FontStyle.Regular);
                 }
             }
             var appFont = new Font(pfc.Families[0], 9, FontStyle.Regular);
             //this.Font = appFont;                        // sets the form itself
-            ApplyFontRecursive(this, appFont);
+            //ApplyFontRecursive(this, appFont);
             // Do not execute runtime setup when opened in the VS designer
             if (System.ComponentModel.LicenseManager.UsageMode
                 == System.ComponentModel.LicenseUsageMode.Designtime) return;
@@ -1137,14 +1137,20 @@ namespace StakeBotUI
         private void BtnCondition_Click(object sender, EventArgs e)
         {
             var current = _s.GetConditions(_currentGame);
-            using (var f = new ConditionBuilderForm(current))
+            var namedStrats = _s.GetNamedStrategies(_currentGame);
+            var activeName = _s.ActiveStrategyName.TryGetValue(_currentGame, out var n) ? n : "";
+
+            using (var f = new ConditionBuilderForm(current, namedStrats, activeName))
             {
                 f.Text = $"Condition Builder — {_currentGame.ToUpper()}";
                 if (f.ShowDialog(this) == DialogResult.OK)
                 {
                     _s.GameConditions[_currentGame] = f.Result;
+                    _s.NamedStrategies[_currentGame] = f.ResultStrategies;
+                    _s.ActiveStrategyName[_currentGame] = f.ResultStrategyName;
                     SaveSettings();
-                    AppendLog($"[INFO] Conditions saved for {_currentGame} ({f.Result.Count} blocks)");
+                    AppendLog($"[INFO] Conditions saved for {_currentGame} ({f.Result.Count} blocks)" +
+                              (string.IsNullOrEmpty(f.ResultStrategyName) ? "" : $" — strategy: \"{f.ResultStrategyName}\""));
                 }
             }
         }

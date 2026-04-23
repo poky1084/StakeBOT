@@ -46,6 +46,20 @@ namespace StakeBotUI
                 GameConditions[game] = new List<ConditionBlockData>();
             return GameConditions[game];
         }
+        public Dictionary<string, Dictionary<string, List<ConditionBlockData>>> NamedStrategies { get; set; }
+            = new Dictionary<string, Dictionary<string, List<ConditionBlockData>>>();
+
+        /// <summary>Tracks which strategy name was last active per game.</summary>
+        public Dictionary<string, string> ActiveStrategyName { get; set; }
+            = new Dictionary<string, string>();
+
+        // Helper – always returns a dict (never null) for a given game key
+        public Dictionary<string, List<ConditionBlockData>> GetNamedStrategies(string game)
+        {
+            if (!NamedStrategies.ContainsKey(game))
+                NamedStrategies[game] = new Dictionary<string, List<ConditionBlockData>>();
+            return NamedStrategies[game];
+        }
 
         // ─── DICE ─────────────────────────────────────────────────────────
         public bool    DiceBetHigh     { get; set; } = false;
