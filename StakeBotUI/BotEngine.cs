@@ -29,6 +29,8 @@ namespace StakeBotUI
         public List<string> ResultColors { get; set; }
         /// <summary>True when this bet was the one that triggered a stop condition (highlighted orange in history).</summary>
         public bool    TriggeredStop    { get; set; }
+        /// <summary>When set by a game method, ApplyResult will halt the bot after this bet (e.g. HiLo card-filter matched all).</summary>
+        public bool    RequestStop      { get; set; }
         
     }
     
@@ -222,6 +224,14 @@ namespace StakeBotUI
                 && Math.Round(result.RollResult, 2, MidpointRounding.AwayFromZero) == Math.Round(_s.StopDiceResultValue, 2, MidpointRounding.AwayFromZero))
             { _shouldStop = true; _log?.Invoke($"[STOP] Dice {result.RollResult:F2} = target"); }
 
+            if (!_shouldStop && _s.SelectedGame == "primedice" && result.RollResult > 0)
+            {
+                decimal roll2dp = Math.Round(result.RollResult, 2, MidpointRounding.AwayFromZero);
+                if ((_s.PDStopOnRoll1 && roll2dp == Math.Round(_s.PDStopRoll1, 2, MidpointRounding.AwayFromZero))
+                 || (_s.PDStopOnRoll2 && roll2dp == Math.Round(_s.PDStopRoll2, 2, MidpointRounding.AwayFromZero)))
+                { _shouldStop = true; _log?.Invoke($"[STOP] Primedice X roll {roll2dp:F2} matched stop target"); }
+            }
+
             if (!_shouldStop && _s.SelectedGame == "diamonds" && _s.StopOnDiamondsWin)
             {
                 bool matched = DiamondPatternMatches(_s.DiamondsColors, result.ResultColors);
@@ -232,6 +242,9 @@ namespace StakeBotUI
                     _log?.Invoke($"[STOP] Diamonds pattern [{_s.DiamondsColors}] — {desc}");
                 }
             }
+
+            if (!_shouldStop && result.RequestStop)
+            { _shouldStop = true; _log?.Invoke($"[STOP] HiLo card-filter matched all cards — pattern complete."); }
 
             // Mark the result that caused the stop, then add it to history.
             // Skip the orange flag if the user manually clicked Stop (token cancelled).
@@ -495,6 +508,11 @@ namespace StakeBotUI
                 lastBet = startBet;
             }
 
+            // ── Suit/color mode — derive reference from start card ────────────
+            string hiloSuitMode = _s.HiloSuitMode ?? "None";
+            string refSuit      = lastSuit;               // e.g. "H"
+            string refColor     = HiloSuitColor(lastSuit); // "red" | "black" | "?"
+
             // ── Pattern loop ─────────────────────────────────────────────────
             for (int step = 0; step < _hiloPattern.Length && active; step++)
             {
@@ -552,6 +570,26 @@ namespace StakeBotUI
 
                     // Notify the UI card strip — multi > 1.0 distinguishes from start card
                     _onHiloCard?.Invoke(lastRank, lastSuit, revealedMulti > 1.0 ? revealedMulti : 1.01);
+
+                    // ── Suit/color early-cashout check ────────────────────────
+                    bool suitViolation = false;
+                    if (refSuit != "?" && active)
+                    {
+                        if (hiloSuitMode == "All same suit" && lastSuit != refSuit)
+                            suitViolation = true;
+                        else if (hiloSuitMode == "All same color" && refColor != "?" &&
+                                 HiloSuitColor(lastSuit) != refColor)
+                            suitViolation = true;
+                    }
+                    if (suitViolation)
+                    {
+                        LogError($"[HILO] {hiloSuitMode} violation (ref={refSuit} got={lastSuit}) — cashing out early.");
+                        string cardSeqEarly = string.Join(",", cardHistory);
+                        var coJsonE = await Post("_api/casino/hilo/cashout", new { identifier = RandId() }, ct);
+                        var (coBetE, coErrE, coErrTypeE) = ExtractBet(coJsonE);
+                        if (coErrE != null) return ErrorResult("hilo", coErrE, coErrTypeE);
+                        return MakeResult(coBetE, "hilo", $"pattern={patternDesc}|{hiloSuitMode}-cashout", cardSeqEarly);
+                    }
                 }
                 // No early return here — cashout only fires after the full pattern completes.
             }
@@ -565,7 +603,10 @@ namespace StakeBotUI
                 var cashJson = await Post("_api/casino/hilo/cashout", new { identifier = RandId() }, ct);
                 var (cashBet, cashErr, cashErrType) = ExtractBet(cashJson);
                 if (cashErr != null) return ErrorResult("hilo", cashErr, cashErrType);
-                return MakeResult(cashBet, "hilo", $"pattern={patternDesc}|cashout", cardSeq);
+                var cashResult = MakeResult(cashBet, "hilo", $"pattern={patternDesc}|cashout", cardSeq);
+                // Card filter was active and all cards passed — stop the bot.
+                if (hiloSuitMode != "None") cashResult.RequestStop = true;
+                return cashResult;
             }
             // Game ended (bust) before pattern completed — return the last received bet result.
             return MakeResult(lastBet, "hilo", $"pattern={patternDesc}", cardSeq);
@@ -607,6 +648,18 @@ namespace StakeBotUI
                 case 4: return isHigh ? "higherEqual" : "lowerEqual";  // highest odds = safest side
                 case 5: return isHigh ? "lowerEqual"  : "higherEqual"; // lowest odds  = best payout side
                 default: return "higher";
+            }
+        }
+
+        /// <summary>Returns "red" for Hearts/Diamonds, "black" for Clubs/Spades, "?" for unknown.</summary>
+        private static string HiloSuitColor(string suit)
+        {
+            if (suit == null) return "?";
+            switch (suit.ToUpper())
+            {
+                case "H": case "D": return "red";
+                case "C": case "S": return "black";
+                default:             return "?";
             }
         }
 

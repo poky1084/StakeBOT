@@ -80,6 +80,8 @@ namespace StakeBotUI
             this.cmbHiloStartCard = new System.Windows.Forms.ComboBox();
             this.lblHiloSuitLbl = new System.Windows.Forms.Label();
             this.cmbHiloSuit = new System.Windows.Forms.ComboBox();
+            this.lblHiloSuitModeLbl = new System.Windows.Forms.Label();
+            this.cmbHiloSuitMode = new System.Windows.Forms.ComboBox();
             this.lblHiloCardHint = new System.Windows.Forms.Label();
             this.lblManualSep = new System.Windows.Forms.Label();
             this.btnManualHigh = new System.Windows.Forms.Button();
@@ -225,6 +227,10 @@ namespace StakeBotUI
             this.nudPDT3 = new System.Windows.Forms.NumericUpDown();
             this.lblPDT4 = new System.Windows.Forms.Label();
             this.nudPDT4 = new System.Windows.Forms.NumericUpDown();
+            this.nudPDStopRoll1 = new System.Windows.Forms.NumericUpDown();
+            this.nudPDStopRoll2 = new System.Windows.Forms.NumericUpDown();
+            this.chkPDStopRoll1 = new System.Windows.Forms.CheckBox();
+            this.chkPDStopRoll2 = new System.Windows.Forms.CheckBox();
             this.panelBlueSamurai = new System.Windows.Forms.Panel();
             this.lblBlueSamuraiTitle = new System.Windows.Forms.Label();
             this.lblBlueSamuraiNote = new System.Windows.Forms.Label();
@@ -293,6 +299,8 @@ namespace StakeBotUI
             ((System.ComponentModel.ISupportInitialize)(this.nudPDT2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPDT3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPDT4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPDStopRoll1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPDStopRoll2)).BeginInit();
             this.panelBlueSamurai.SuspendLayout();
             this.panelVideoPoker.SuspendLayout();
             this.panelBlackjack.SuspendLayout();
@@ -916,6 +924,8 @@ namespace StakeBotUI
             this.panelHilo.Controls.Add(this.lblHiloSuitLbl);
             this.panelHilo.Controls.Add(this.cmbHiloSuit);
             this.panelHilo.Controls.Add(this.lblHiloCardHint);
+            this.panelHilo.Controls.Add(this.lblHiloSuitModeLbl);
+            this.panelHilo.Controls.Add(this.cmbHiloSuitMode);
             this.panelHilo.Controls.Add(this.lblManualSep);
             this.panelHilo.Controls.Add(this.btnManualHigh);
             this.panelHilo.Controls.Add(this.btnManualLow);
@@ -988,7 +998,7 @@ namespace StakeBotUI
             // 
             this.lblHiloRankLbl.Location = new System.Drawing.Point(8, 144);
             this.lblHiloRankLbl.Name = "lblHiloRankLbl";
-            this.lblHiloRankLbl.Size = new System.Drawing.Size(36, 18);
+            this.lblHiloRankLbl.Size = new System.Drawing.Size(45, 18);
             this.lblHiloRankLbl.TabIndex = 6;
             this.lblHiloRankLbl.Text = "Rank:";
             // 
@@ -1009,9 +1019,9 @@ namespace StakeBotUI
             "J",
             "Q",
             "K"});
-            this.cmbHiloStartCard.Location = new System.Drawing.Point(48, 141);
+            this.cmbHiloStartCard.Location = new System.Drawing.Point(63, 141);
             this.cmbHiloStartCard.Name = "cmbHiloStartCard";
-            this.cmbHiloStartCard.Size = new System.Drawing.Size(80, 24);
+            this.cmbHiloStartCard.Size = new System.Drawing.Size(68, 24);
             this.cmbHiloStartCard.TabIndex = 7;
             this.cmbHiloStartCard.SelectedIndexChanged += new System.EventHandler(this.QueueSave);
             // 
@@ -1019,7 +1029,7 @@ namespace StakeBotUI
             // 
             this.lblHiloSuitLbl.Location = new System.Drawing.Point(136, 144);
             this.lblHiloSuitLbl.Name = "lblHiloSuitLbl";
-            this.lblHiloSuitLbl.Size = new System.Drawing.Size(30, 18);
+            this.lblHiloSuitLbl.Size = new System.Drawing.Size(38, 18);
             this.lblHiloSuitLbl.TabIndex = 8;
             this.lblHiloSuitLbl.Text = "Suit:";
             // 
@@ -1031,7 +1041,7 @@ namespace StakeBotUI
             "H",
             "D",
             "S"});
-            this.cmbHiloSuit.Location = new System.Drawing.Point(168, 141);
+            this.cmbHiloSuit.Location = new System.Drawing.Point(176, 141);
             this.cmbHiloSuit.Name = "cmbHiloSuit";
             this.cmbHiloSuit.Size = new System.Drawing.Size(90, 24);
             this.cmbHiloSuit.TabIndex = 9;
@@ -1041,19 +1051,39 @@ namespace StakeBotUI
             // 
             this.lblHiloCardHint.Font = new System.Drawing.Font("Segoe UI", 7.5F);
             this.lblHiloCardHint.ForeColor = System.Drawing.Color.Gray;
-            this.lblHiloCardHint.Location = new System.Drawing.Point(8, 172);
+            this.lblHiloCardHint.Location = new System.Drawing.Point(8, 196);
             this.lblHiloCardHint.Name = "lblHiloCardHint";
             this.lblHiloCardHint.Size = new System.Drawing.Size(340, 32);
             this.lblHiloCardHint.TabIndex = 10;
-            this.lblHiloCardHint.Text = "Leave Rank blank for random start card.\nSuits: C=Clubs H=Hearts D=Diamonds S=Spad" +
-    "es";
+            this.lblHiloCardHint.Text = "";
+            // 
+            // lblHiloSuitModeLbl
+            // 
+            this.lblHiloSuitModeLbl.Location = new System.Drawing.Point(8, 170);
+            this.lblHiloSuitModeLbl.Name = "lblHiloSuitModeLbl";
+            this.lblHiloSuitModeLbl.Size = new System.Drawing.Size(68, 18);
+            this.lblHiloSuitModeLbl.TabIndex = 18;
+            this.lblHiloSuitModeLbl.Text = "Stop on:";
+            // 
+            // cmbHiloSuitMode
+            // 
+            this.cmbHiloSuitMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbHiloSuitMode.Items.AddRange(new object[] {
+            "None",
+            "All same color",
+            "All same suit"});
+            this.cmbHiloSuitMode.Location = new System.Drawing.Point(80, 167);
+            this.cmbHiloSuitMode.Name = "cmbHiloSuitMode";
+            this.cmbHiloSuitMode.Size = new System.Drawing.Size(150, 24);
+            this.cmbHiloSuitMode.TabIndex = 19;
+            this.cmbHiloSuitMode.SelectedIndexChanged += new System.EventHandler(this.QueueSave);
             // 
             // lblManualSep
             // 
             this.lblManualSep.AutoSize = true;
             this.lblManualSep.Font = new System.Drawing.Font("Segoe UI", 7.5F);
             this.lblManualSep.ForeColor = System.Drawing.Color.Gray;
-            this.lblManualSep.Location = new System.Drawing.Point(8, 210);
+            this.lblManualSep.Location = new System.Drawing.Point(8, 234);
             this.lblManualSep.Name = "lblManualSep";
             this.lblManualSep.Size = new System.Drawing.Size(296, 17);
             this.lblManualSep.TabIndex = 11;
@@ -1063,7 +1093,7 @@ namespace StakeBotUI
             // 
             this.btnManualHigh.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(230)))), ((int)(((byte)(200)))));
             this.btnManualHigh.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
-            this.btnManualHigh.Location = new System.Drawing.Point(8, 230);
+            this.btnManualHigh.Location = new System.Drawing.Point(8, 254);
             this.btnManualHigh.Name = "btnManualHigh";
             this.btnManualHigh.Size = new System.Drawing.Size(62, 30);
             this.btnManualHigh.TabIndex = 12;
@@ -1075,7 +1105,7 @@ namespace StakeBotUI
             // 
             this.btnManualLow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
             this.btnManualLow.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
-            this.btnManualLow.Location = new System.Drawing.Point(74, 230);
+            this.btnManualLow.Location = new System.Drawing.Point(74, 254);
             this.btnManualLow.Name = "btnManualLow";
             this.btnManualLow.Size = new System.Drawing.Size(62, 30);
             this.btnManualLow.TabIndex = 13;
@@ -1087,7 +1117,7 @@ namespace StakeBotUI
             // 
             this.btnManualEqual.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(220)))), ((int)(((byte)(245)))));
             this.btnManualEqual.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
-            this.btnManualEqual.Location = new System.Drawing.Point(140, 230);
+            this.btnManualEqual.Location = new System.Drawing.Point(140, 254);
             this.btnManualEqual.Name = "btnManualEqual";
             this.btnManualEqual.Size = new System.Drawing.Size(62, 30);
             this.btnManualEqual.TabIndex = 14;
@@ -1099,7 +1129,7 @@ namespace StakeBotUI
             // 
             this.btnManualSkip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(235)))), ((int)(((byte)(200)))));
             this.btnManualSkip.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
-            this.btnManualSkip.Location = new System.Drawing.Point(206, 230);
+            this.btnManualSkip.Location = new System.Drawing.Point(206, 254);
             this.btnManualSkip.Name = "btnManualSkip";
             this.btnManualSkip.Size = new System.Drawing.Size(62, 30);
             this.btnManualSkip.TabIndex = 15;
@@ -1112,7 +1142,7 @@ namespace StakeBotUI
             this.btnManualCashout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(220)))), ((int)(((byte)(200)))));
             this.btnManualCashout.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
             this.btnManualCashout.ForeColor = System.Drawing.Color.Black;
-            this.btnManualCashout.Location = new System.Drawing.Point(92, 268);
+            this.btnManualCashout.Location = new System.Drawing.Point(92, 292);
             this.btnManualCashout.Name = "btnManualCashout";
             this.btnManualCashout.Size = new System.Drawing.Size(80, 30);
             this.btnManualCashout.TabIndex = 16;
@@ -1125,7 +1155,7 @@ namespace StakeBotUI
             this.btnManualNewGame.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(240)))), ((int)(((byte)(255)))));
             this.btnManualNewGame.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
             this.btnManualNewGame.ForeColor = System.Drawing.Color.Black;
-            this.btnManualNewGame.Location = new System.Drawing.Point(8, 268);
+            this.btnManualNewGame.Location = new System.Drawing.Point(8, 292);
             this.btnManualNewGame.Name = "btnManualNewGame";
             this.btnManualNewGame.Size = new System.Drawing.Size(80, 30);
             this.btnManualNewGame.TabIndex = 17;
@@ -2617,6 +2647,10 @@ namespace StakeBotUI
             this.panelPrimedice.Controls.Add(this.nudPDT3);
             this.panelPrimedice.Controls.Add(this.lblPDT4);
             this.panelPrimedice.Controls.Add(this.nudPDT4);
+            this.panelPrimedice.Controls.Add(this.nudPDStopRoll1);
+            this.panelPrimedice.Controls.Add(this.nudPDStopRoll2);
+            this.panelPrimedice.Controls.Add(this.chkPDStopRoll1);
+            this.panelPrimedice.Controls.Add(this.chkPDStopRoll2);
             this.panelPrimedice.Location = new System.Drawing.Point(0, 0);
             this.panelPrimedice.Name = "panelPrimedice";
             this.panelPrimedice.Size = new System.Drawing.Size(358, 461);
@@ -2760,6 +2794,72 @@ namespace StakeBotUI
             0,
             0});
             this.nudPDT4.ValueChanged += new System.EventHandler(this.QueueSave);
+            // 
+            // chkPDStopRoll1
+            // 
+            this.chkPDStopRoll1.Location = new System.Drawing.Point(8, 114);
+            this.chkPDStopRoll1.Name = "chkPDStopRoll1";
+            this.chkPDStopRoll1.Size = new System.Drawing.Size(152, 22);
+            this.chkPDStopRoll1.TabIndex = 11;
+            this.chkPDStopRoll1.Text = "1. Stop on exact roll:";
+            this.chkPDStopRoll1.CheckedChanged += new System.EventHandler(this.QueueSave);
+            // 
+            // nudPDStopRoll1
+            // 
+            this.nudPDStopRoll1.DecimalPlaces = 2;
+            this.nudPDStopRoll1.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.nudPDStopRoll1.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            131072});
+            this.nudPDStopRoll1.Location = new System.Drawing.Point(164, 111);
+            this.nudPDStopRoll1.Name = "nudPDStopRoll1";
+            this.nudPDStopRoll1.Size = new System.Drawing.Size(88, 22);
+            this.nudPDStopRoll1.TabIndex = 12;
+            this.nudPDStopRoll1.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.nudPDStopRoll1.ValueChanged += new System.EventHandler(this.QueueSave);
+            // 
+            // chkPDStopRoll2
+            // 
+            this.chkPDStopRoll2.Location = new System.Drawing.Point(8, 140);
+            this.chkPDStopRoll2.Name = "chkPDStopRoll2";
+            this.chkPDStopRoll2.Size = new System.Drawing.Size(152, 22);
+            this.chkPDStopRoll2.TabIndex = 13;
+            this.chkPDStopRoll2.Text = "2. Stop on exact roll:";
+            this.chkPDStopRoll2.CheckedChanged += new System.EventHandler(this.QueueSave);
+            // 
+            // nudPDStopRoll2
+            // 
+            this.nudPDStopRoll2.DecimalPlaces = 2;
+            this.nudPDStopRoll2.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.nudPDStopRoll2.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            131072});
+            this.nudPDStopRoll2.Location = new System.Drawing.Point(164, 137);
+            this.nudPDStopRoll2.Name = "nudPDStopRoll2";
+            this.nudPDStopRoll2.Size = new System.Drawing.Size(88, 22);
+            this.nudPDStopRoll2.TabIndex = 14;
+            this.nudPDStopRoll2.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.nudPDStopRoll2.ValueChanged += new System.EventHandler(this.QueueSave);
             // 
             // panelBlueSamurai
             // 
@@ -3047,6 +3147,8 @@ namespace StakeBotUI
             ((System.ComponentModel.ISupportInitialize)(this.nudPDT2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPDT3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPDT4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPDStopRoll1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPDStopRoll2)).EndInit();
             this.panelBlueSamurai.ResumeLayout(false);
             this.panelVideoPoker.ResumeLayout(false);
             this.panelVideoPoker.PerformLayout();
@@ -3102,6 +3204,8 @@ namespace StakeBotUI
         private System.Windows.Forms.TextBox   txtHiloPattern;
         private System.Windows.Forms.ComboBox  cmbHiloStartCard;
         private System.Windows.Forms.ComboBox  cmbHiloSuit;
+        private System.Windows.Forms.Label     lblHiloSuitModeLbl;
+        private System.Windows.Forms.ComboBox  cmbHiloSuitMode;
         // MINES
         private System.Windows.Forms.Label     lblMinesTitle, lblMinesCountLbl, lblMinesFieldsLbl, lblMinesHint;
         private System.Windows.Forms.NumericUpDown nudMinesMines;
@@ -3178,9 +3282,9 @@ namespace StakeBotUI
         private System.Windows.Forms.Label     lblDrillTitle, lblDrillTargetLbl, lblDrillPickLbl;
         private System.Windows.Forms.NumericUpDown nudDrillTarget, nudDrillPick;
         // PRIMEDICE
-        private System.Windows.Forms.Label     lblPrimediceTitle, lblPDCondLbl, lblPDT1, lblPDT2, lblPDT3, lblPDT4;
-        private System.Windows.Forms.ComboBox  cmbPDCond;
-        private System.Windows.Forms.NumericUpDown nudPDT1, nudPDT2, nudPDT3, nudPDT4;
+        private System.Windows.Forms.Label     lblPrimediceTitle, lblPDCondLbl, lblPDT1, lblPDT2, lblPDT3, lblPDT4;        private System.Windows.Forms.ComboBox  cmbPDCond;
+        private System.Windows.Forms.NumericUpDown nudPDT1, nudPDT2, nudPDT3, nudPDT4, nudPDStopRoll1, nudPDStopRoll2;
+        private System.Windows.Forms.CheckBox   chkPDStopRoll1, chkPDStopRoll2;
         // Note panels
         private System.Windows.Forms.Label     lblBlueSamuraiTitle, lblBlueSamuraiNote;
         private System.Windows.Forms.Label     lblVideoPokerTitle,  lblVideoPokerNote;

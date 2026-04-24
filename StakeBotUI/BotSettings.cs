@@ -73,6 +73,8 @@ namespace StakeBotUI
         public string  HiloStartCardRank { get; set; } = "A";
         /// <summary>Card suit: C H D S (empty = server picks)</summary>
         public string  HiloStartCardSuit { get; set; } = "C";
+        /// <summary>None | AllSameColor | AllSameSuit — cashout early if cards deviate.</summary>
+        public string  HiloSuitMode      { get; set; } = "None";
 
         // ─── MINES ────────────────────────────────────────────────────────
         public int     MinesMines      { get; set; } = 1;
@@ -147,6 +149,12 @@ namespace StakeBotUI
         public decimal PDTarget3       { get; set; } = 34m;
         public decimal PDTarget4       { get; set; } = 68m;
         public string  PDCondition     { get; set; } = "rollBetweenTwo";
+        /// <summary>Stop when the Primedice X roll result equals this value (2 dp). 0 = disabled.</summary>
+        public decimal PDStopRoll1     { get; set; } = 0m;
+        /// <summary>Stop when the Primedice X roll result equals this value (2 dp). 0 = disabled.</summary>
+        public decimal PDStopRoll2     { get; set; } = 0m;
+        public bool    PDStopOnRoll1   { get; set; } = false;
+        public bool    PDStopOnRoll2   { get; set; } = false;
 
         // ─── MOLES ────────────────────────────────────────────────────────
         public int     MolesMoles      { get; set; } = 3;

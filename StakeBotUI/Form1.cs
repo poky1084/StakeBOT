@@ -1374,7 +1374,7 @@ namespace StakeBotUI
                 cmbPumpDiff, cmbDragonDiff, cmbBarsDiff,
                 cmbCasesDiff, cmbSnakesDiff, cmbDartsDiff,
                 cmbChickenDiff, cmbTarotDiff, cmbPDCond,
-                cmbHiloStartCard, cmbHiloSuit, FastModeBox,
+                cmbHiloStartCard, cmbHiloSuit, cmbHiloSuitMode, FastModeBox,
                 cmbVideoPokerStrat
             })
             {
@@ -1399,6 +1399,7 @@ namespace StakeBotUI
             _s.HiloPattern      = txtHiloPattern.Text;
             _s.HiloStartCardRank= cmbHiloStartCard.SelectedItem?.ToString() ?? "";
             _s.HiloStartCardSuit= cmbHiloSuit.SelectedItem?.ToString() ?? "";
+            _s.HiloSuitMode     = cmbHiloSuitMode.SelectedItem?.ToString() ?? "None";
             _s.MinesMines       = (int)nudMinesMines.Value;
             _s.MinesFields      = txtMinesFields.Text;
             _s.KenoNumbers      = txtKenoNumbers.Text;
@@ -1438,6 +1439,10 @@ namespace StakeBotUI
             _s.PDCondition      = cmbPDCond.SelectedItem?.ToString();
             _s.PDTarget1        = nudPDT1.Value; _s.PDTarget2 = nudPDT2.Value;
             _s.PDTarget3        = nudPDT3.Value; _s.PDTarget4 = nudPDT4.Value;
+            _s.PDStopRoll1      = nudPDStopRoll1.Value;
+            _s.PDStopRoll2      = nudPDStopRoll2.Value;
+            _s.PDStopOnRoll1    = chkPDStopRoll1.Checked;
+            _s.PDStopOnRoll2    = chkPDStopRoll2.Checked;
             _s.VideoPokerStrategy = cmbVideoPokerStrat.SelectedItem?.ToString() ?? "optimal";
             _s.StopOnMultiplier    = chkStopMultiplier.Checked;
             _s.StopMultiplierValue = nudStopMultiplier.Value;
@@ -1470,6 +1475,7 @@ namespace StakeBotUI
             // file) is also treated as "use default" so the blank item can never win.
             SC(cmbHiloStartCard, string.IsNullOrEmpty(_s.HiloStartCardRank) ? "A" : _s.HiloStartCardRank);
             SC(cmbHiloSuit,      string.IsNullOrEmpty(_s.HiloStartCardSuit) ? "C" : _s.HiloStartCardSuit);
+            SC(cmbHiloSuitMode,  string.IsNullOrEmpty(_s.HiloSuitMode)      ? "None" : _s.HiloSuitMode);
             SS(nudMinesMines, _s.MinesMines); ST(txtMinesFields, _s.MinesFields);
             ST(txtKenoNumbers, _s.KenoNumbers); SC(cmbKenoRisk, _s.KenoRisk);
             SS(nudPlinkoRows, _s.PlinkoRows); SC(cmbPlinkoRisk, _s.PlinkoRisk);
@@ -1499,6 +1505,10 @@ namespace StakeBotUI
             SC(cmbPDCond, _s.PDCondition);
             SS(nudPDT1, _s.PDTarget1); SS(nudPDT2, _s.PDTarget2);
             SS(nudPDT3, _s.PDTarget3); SS(nudPDT4, _s.PDTarget4);
+            SS(nudPDStopRoll1, _s.PDStopRoll1);
+            SS(nudPDStopRoll2, _s.PDStopRoll2);
+            chkPDStopRoll1.Checked = _s.PDStopOnRoll1;
+            chkPDStopRoll2.Checked = _s.PDStopOnRoll2;
             SC(cmbVideoPokerStrat, string.IsNullOrEmpty(_s.VideoPokerStrategy) ? "optimal" : _s.VideoPokerStrategy);
             chkStopMultiplier.Checked = _s.StopOnMultiplier;
             SS(nudStopMultiplier, _s.StopMultiplierValue > 0 ? _s.StopMultiplierValue : 500m);
