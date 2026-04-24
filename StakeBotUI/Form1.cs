@@ -69,12 +69,15 @@ namespace StakeBotUI
             {
                 if (control is Label || control is CheckBox || control is Button || control is ComboBox || control is ListView)
                 {
-                    //ontrol.Font = new Font(pfc.Families[0], 9, FontStyle.Regular);
+                    control.Font = new Font("Segoe UI", 10, FontStyle.Regular);
                 }
             }
-            var appFont = new Font(pfc.Families[0], 9, FontStyle.Regular);
+            var appFont = new Font("Segoe UI", 10, FontStyle.Regular);
+
             //this.Font = appFont;                        // sets the form itself
-            //ApplyFontRecursive(this, appFont);
+            ApplyFontRecursive(this, appFont);
+            lblBalance.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            btnCondition.Font = new Font("Segoe UI", 10, FontStyle.Bold);
             // Do not execute runtime setup when opened in the VS designer
             if (System.ComponentModel.LicenseManager.UsageMode
                 == System.ComponentModel.LicenseUsageMode.Designtime) return;

@@ -302,7 +302,7 @@ namespace StakeBotUI
             // lblApiKeyLabel
             // 
             this.lblApiKeyLabel.AutoSize = true;
-            this.lblApiKeyLabel.Location = new System.Drawing.Point(235, 36);
+            this.lblApiKeyLabel.Location = new System.Drawing.Point(230, 36);
             this.lblApiKeyLabel.Name = "lblApiKeyLabel";
             this.lblApiKeyLabel.Size = new System.Drawing.Size(51, 16);
             this.lblApiKeyLabel.TabIndex = 0;
@@ -310,9 +310,9 @@ namespace StakeBotUI
             // 
             // txtApiKey
             // 
-            this.txtApiKey.Location = new System.Drawing.Point(306, 34);
+            this.txtApiKey.Location = new System.Drawing.Point(311, 34);
             this.txtApiKey.Name = "txtApiKey";
-            this.txtApiKey.Size = new System.Drawing.Size(174, 22);
+            this.txtApiKey.Size = new System.Drawing.Size(169, 22);
             this.txtApiKey.TabIndex = 0;
             this.txtApiKey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtApiKey.TextChanged += new System.EventHandler(this.txtApiKey_TextChanged);
@@ -331,7 +331,7 @@ namespace StakeBotUI
             // 
             // btnGetCookie
             // 
-            this.btnGetCookie.Location = new System.Drawing.Point(161, 0);
+            this.btnGetCookie.Location = new System.Drawing.Point(160, 0);
             this.btnGetCookie.Name = "btnGetCookie";
             this.btnGetCookie.Size = new System.Drawing.Size(112, 32);
             this.btnGetCookie.TabIndex = 2;
@@ -364,7 +364,7 @@ namespace StakeBotUI
             // 
             this.lblWsStatus.AutoSize = true;
             this.lblWsStatus.ForeColor = System.Drawing.Color.Gray;
-            this.lblWsStatus.Location = new System.Drawing.Point(180, 6);
+            this.lblWsStatus.Location = new System.Drawing.Point(184, 5);
             this.lblWsStatus.Name = "lblWsStatus";
             this.lblWsStatus.Size = new System.Drawing.Size(94, 16);
             this.lblWsStatus.TabIndex = 5;
@@ -375,7 +375,7 @@ namespace StakeBotUI
             // 
             this.btnLogin.Location = new System.Drawing.Point(379, 0);
             this.btnLogin.Name = "btnLogin";
-            this.btnLogin.Size = new System.Drawing.Size(66, 29);
+            this.btnLogin.Size = new System.Drawing.Size(75, 32);
             this.btnLogin.TabIndex = 3;
             this.btnLogin.Text = "Login";
             this.btnLogin.UseVisualStyleBackColor = true;
@@ -384,7 +384,7 @@ namespace StakeBotUI
             // cmbCurrency
             // 
             this.cmbCurrency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbCurrency.Location = new System.Drawing.Point(449, 0);
+            this.cmbCurrency.Location = new System.Drawing.Point(460, 0);
             this.cmbCurrency.Name = "cmbCurrency";
             this.cmbCurrency.Size = new System.Drawing.Size(100, 24);
             this.cmbCurrency.TabIndex = 4;
@@ -448,7 +448,7 @@ namespace StakeBotUI
             // lblBaseBetLabel
             // 
             this.lblBaseBetLabel.AutoSize = true;
-            this.lblBaseBetLabel.Location = new System.Drawing.Point(235, 72);
+            this.lblBaseBetLabel.Location = new System.Drawing.Point(230, 72);
             this.lblBaseBetLabel.Name = "lblBaseBetLabel";
             this.lblBaseBetLabel.Size = new System.Drawing.Size(65, 16);
             this.lblBaseBetLabel.TabIndex = 10;
@@ -457,7 +457,7 @@ namespace StakeBotUI
             // nudBaseBet
             // 
             this.nudBaseBet.DecimalPlaces = 8;
-            this.nudBaseBet.Location = new System.Drawing.Point(324, 69);
+            this.nudBaseBet.Location = new System.Drawing.Point(311, 69);
             this.nudBaseBet.Maximum = new decimal(new int[] {
             999999,
             0,
@@ -471,9 +471,9 @@ namespace StakeBotUI
             // btnCondition
             // 
             this.btnCondition.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
-            this.btnCondition.Location = new System.Drawing.Point(482, 67);
+            this.btnCondition.Location = new System.Drawing.Point(460, 67);
             this.btnCondition.Name = "btnCondition";
-            this.btnCondition.Size = new System.Drawing.Size(145, 33);
+            this.btnCondition.Size = new System.Drawing.Size(167, 33);
             this.btnCondition.TabIndex = 8;
             this.btnCondition.Text = "⚙ Conditions";
             this.btnCondition.UseVisualStyleBackColor = true;
@@ -523,9 +523,9 @@ namespace StakeBotUI
             // chkStopMultiplier
             // 
             this.chkStopMultiplier.Font = new System.Drawing.Font("Segoe UI", 8.5F);
-            this.chkStopMultiplier.Location = new System.Drawing.Point(877, 71);
+            this.chkStopMultiplier.Location = new System.Drawing.Point(877, 70);
             this.chkStopMultiplier.Name = "chkStopMultiplier";
-            this.chkStopMultiplier.Size = new System.Drawing.Size(119, 22);
+            this.chkStopMultiplier.Size = new System.Drawing.Size(119, 29);
             this.chkStopMultiplier.TabIndex = 12;
             this.chkStopMultiplier.Text = "Stop on X";
             this.chkStopMultiplier.CheckedChanged += new System.EventHandler(this.QueueSave);
@@ -757,7 +757,7 @@ namespace StakeBotUI
             this.rbDiceUnder.Checked = true;
             this.rbDiceUnder.Location = new System.Drawing.Point(148, 30);
             this.rbDiceUnder.Name = "rbDiceUnder";
-            this.rbDiceUnder.Size = new System.Drawing.Size(64, 22);
+            this.rbDiceUnder.Size = new System.Drawing.Size(67, 22);
             this.rbDiceUnder.TabIndex = 3;
             this.rbDiceUnder.TabStop = true;
             this.rbDiceUnder.Text = "Under";
@@ -2924,9 +2924,9 @@ namespace StakeBotUI
             // 
             // ResetSeedBtn
             // 
-            this.ResetSeedBtn.Location = new System.Drawing.Point(608, 32);
+            this.ResetSeedBtn.Location = new System.Drawing.Point(608, 30);
             this.ResetSeedBtn.Name = "ResetSeedBtn";
-            this.ResetSeedBtn.Size = new System.Drawing.Size(132, 30);
+            this.ResetSeedBtn.Size = new System.Drawing.Size(132, 33);
             this.ResetSeedBtn.TabIndex = 56;
             this.ResetSeedBtn.Text = "Reset Seed";
             this.ResetSeedBtn.UseVisualStyleBackColor = true;
@@ -2934,9 +2934,9 @@ namespace StakeBotUI
             // 
             // HighestMultiplierButton
             // 
-            this.HighestMultiplierButton.Location = new System.Drawing.Point(497, 33);
+            this.HighestMultiplierButton.Location = new System.Drawing.Point(497, 31);
             this.HighestMultiplierButton.Name = "HighestMultiplierButton";
-            this.HighestMultiplierButton.Size = new System.Drawing.Size(105, 30);
+            this.HighestMultiplierButton.Size = new System.Drawing.Size(105, 32);
             this.HighestMultiplierButton.TabIndex = 57;
             this.HighestMultiplierButton.Text = "Top 10";
             this.HighestMultiplierButton.UseVisualStyleBackColor = true;
@@ -2947,6 +2947,8 @@ namespace StakeBotUI
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1100, 570);
+            this.Controls.Add(this.txtApiKey);
+            this.Controls.Add(this.nudBaseBet);
             this.Controls.Add(this.HighestMultiplierButton);
             this.Controls.Add(this.ResetSeedBtn);
             this.Controls.Add(this.lblBetsPerSec);
@@ -2955,7 +2957,6 @@ namespace StakeBotUI
             this.Controls.Add(this.FastModeBox);
             this.Controls.Add(this.nudStopMultiplier);
             this.Controls.Add(this.lblApiKeyLabel);
-            this.Controls.Add(this.txtApiKey);
             this.Controls.Add(this.cmbFetchMode);
             this.Controls.Add(this.btnGetCookie);
             this.Controls.Add(this.lblCookieStatus);
@@ -2970,7 +2971,6 @@ namespace StakeBotUI
             this.Controls.Add(this.lblGameLabel);
             this.Controls.Add(this.cmbGame);
             this.Controls.Add(this.lblBaseBetLabel);
-            this.Controls.Add(this.nudBaseBet);
             this.Controls.Add(this.btnCondition);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.btnStop);
