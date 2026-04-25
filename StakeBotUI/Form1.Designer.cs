@@ -80,9 +80,9 @@ namespace StakeBotUI
             this.cmbHiloStartCard = new System.Windows.Forms.ComboBox();
             this.lblHiloSuitLbl = new System.Windows.Forms.Label();
             this.cmbHiloSuit = new System.Windows.Forms.ComboBox();
+            this.lblHiloCardHint = new System.Windows.Forms.Label();
             this.lblHiloSuitModeLbl = new System.Windows.Forms.Label();
             this.cmbHiloSuitMode = new System.Windows.Forms.ComboBox();
-            this.lblHiloCardHint = new System.Windows.Forms.Label();
             this.lblManualSep = new System.Windows.Forms.Label();
             this.btnManualHigh = new System.Windows.Forms.Button();
             this.btnManualLow = new System.Windows.Forms.Button();
@@ -340,9 +340,9 @@ namespace StakeBotUI
             // 
             // btnGetCookie
             // 
-            this.btnGetCookie.Location = new System.Drawing.Point(160, 0);
+            this.btnGetCookie.Location = new System.Drawing.Point(161, 0);
             this.btnGetCookie.Name = "btnGetCookie";
-            this.btnGetCookie.Size = new System.Drawing.Size(112, 32);
+            this.btnGetCookie.Size = new System.Drawing.Size(122, 32);
             this.btnGetCookie.TabIndex = 2;
             this.btnGetCookie.Text = "Get Cookie";
             this.btnGetCookie.UseVisualStyleBackColor = true;
@@ -352,7 +352,7 @@ namespace StakeBotUI
             // 
             this.lblCookieStatus.AutoSize = true;
             this.lblCookieStatus.ForeColor = System.Drawing.Color.Gray;
-            this.lblCookieStatus.Location = new System.Drawing.Point(278, 7);
+            this.lblCookieStatus.Location = new System.Drawing.Point(286, 7);
             this.lblCookieStatus.Name = "lblCookieStatus";
             this.lblCookieStatus.Size = new System.Drawing.Size(69, 16);
             this.lblCookieStatus.TabIndex = 3;
@@ -382,7 +382,7 @@ namespace StakeBotUI
             // 
             // btnLogin
             // 
-            this.btnLogin.Location = new System.Drawing.Point(379, 0);
+            this.btnLogin.Location = new System.Drawing.Point(386, 0);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(75, 32);
             this.btnLogin.TabIndex = 3;
@@ -393,7 +393,7 @@ namespace StakeBotUI
             // cmbCurrency
             // 
             this.cmbCurrency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbCurrency.Location = new System.Drawing.Point(460, 0);
+            this.cmbCurrency.Location = new System.Drawing.Point(467, 0);
             this.cmbCurrency.Name = "cmbCurrency";
             this.cmbCurrency.Size = new System.Drawing.Size(100, 24);
             this.cmbCurrency.TabIndex = 4;
@@ -1056,7 +1056,6 @@ namespace StakeBotUI
             this.lblHiloCardHint.Name = "lblHiloCardHint";
             this.lblHiloCardHint.Size = new System.Drawing.Size(340, 32);
             this.lblHiloCardHint.TabIndex = 10;
-            this.lblHiloCardHint.Text = "";
             // 
             // lblHiloSuitModeLbl
             // 
@@ -2806,15 +2805,6 @@ namespace StakeBotUI
             0});
             this.nudPDT4.ValueChanged += new System.EventHandler(this.QueueSave);
             // 
-            // chkPDStopRoll1
-            // 
-            this.chkPDStopRoll1.Location = new System.Drawing.Point(8, 114);
-            this.chkPDStopRoll1.Name = "chkPDStopRoll1";
-            this.chkPDStopRoll1.Size = new System.Drawing.Size(152, 22);
-            this.chkPDStopRoll1.TabIndex = 11;
-            this.chkPDStopRoll1.Text = "1. Stop on exact roll:";
-            this.chkPDStopRoll1.CheckedChanged += new System.EventHandler(this.QueueSave);
-            // 
             // nudPDStopRoll1
             // 
             this.nudPDStopRoll1.DecimalPlaces = 2;
@@ -2823,30 +2813,16 @@ namespace StakeBotUI
             0,
             0,
             131072});
+            this.nudPDStopRoll1.Location = new System.Drawing.Point(164, 111);
             this.nudPDStopRoll1.Maximum = new decimal(new int[] {
             9999,
             0,
             0,
             131072});
-            this.nudPDStopRoll1.Location = new System.Drawing.Point(164, 111);
             this.nudPDStopRoll1.Name = "nudPDStopRoll1";
             this.nudPDStopRoll1.Size = new System.Drawing.Size(88, 22);
             this.nudPDStopRoll1.TabIndex = 12;
-            this.nudPDStopRoll1.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
             this.nudPDStopRoll1.ValueChanged += new System.EventHandler(this.QueueSave);
-            // 
-            // chkPDStopRoll2
-            // 
-            this.chkPDStopRoll2.Location = new System.Drawing.Point(8, 140);
-            this.chkPDStopRoll2.Name = "chkPDStopRoll2";
-            this.chkPDStopRoll2.Size = new System.Drawing.Size(152, 22);
-            this.chkPDStopRoll2.TabIndex = 13;
-            this.chkPDStopRoll2.Text = "2. Stop on exact roll:";
-            this.chkPDStopRoll2.CheckedChanged += new System.EventHandler(this.QueueSave);
             // 
             // nudPDStopRoll2
             // 
@@ -2856,21 +2832,34 @@ namespace StakeBotUI
             0,
             0,
             131072});
+            this.nudPDStopRoll2.Location = new System.Drawing.Point(164, 137);
             this.nudPDStopRoll2.Maximum = new decimal(new int[] {
             9999,
             0,
             0,
             131072});
-            this.nudPDStopRoll2.Location = new System.Drawing.Point(164, 137);
             this.nudPDStopRoll2.Name = "nudPDStopRoll2";
             this.nudPDStopRoll2.Size = new System.Drawing.Size(88, 22);
             this.nudPDStopRoll2.TabIndex = 14;
-            this.nudPDStopRoll2.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
             this.nudPDStopRoll2.ValueChanged += new System.EventHandler(this.QueueSave);
+            // 
+            // chkPDStopRoll1
+            // 
+            this.chkPDStopRoll1.Location = new System.Drawing.Point(8, 114);
+            this.chkPDStopRoll1.Name = "chkPDStopRoll1";
+            this.chkPDStopRoll1.Size = new System.Drawing.Size(152, 22);
+            this.chkPDStopRoll1.TabIndex = 11;
+            this.chkPDStopRoll1.Text = "1. Stop on exact roll:";
+            this.chkPDStopRoll1.CheckedChanged += new System.EventHandler(this.QueueSave);
+            // 
+            // chkPDStopRoll2
+            // 
+            this.chkPDStopRoll2.Location = new System.Drawing.Point(8, 140);
+            this.chkPDStopRoll2.Name = "chkPDStopRoll2";
+            this.chkPDStopRoll2.Size = new System.Drawing.Size(152, 22);
+            this.chkPDStopRoll2.TabIndex = 13;
+            this.chkPDStopRoll2.Text = "2. Stop on exact roll:";
+            this.chkPDStopRoll2.CheckedChanged += new System.EventHandler(this.QueueSave);
             // 
             // panelBlueSamurai
             // 
