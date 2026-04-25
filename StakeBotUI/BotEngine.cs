@@ -621,13 +621,23 @@ namespace StakeBotUI
             // Pattern 7 always sends "skip", regardless of the current card.
             if (p == 7) return "skip";
 
-            // Pattern 1 (High): only Ace uses strict "higher" (can't go higherEqual from the bottom);
-            // every other card — including King — uses "higherEqual".
-            if (p == 1) return rankU == "A" ? "higher" : "higherEqual";
+            // Pattern 1 (High): Ace → "higher" (can't go higherEqual from the bottom);
+            // King → "equal" (can't go higher from the top); every other card → "higherEqual".
+            if (p == 1)
+            {
+                if (rankU == "A") return "higher";
+                if (rankU == "K") return "equal";
+                return "higherEqual";
+            }
 
-            // Pattern 0 (Low): only King uses strict "lower" (can't go lowerEqual from the top);
-            // every other card — including Ace — uses "lowerEqual".
-            if (p == 0) return rankU == "K" ? "lower" : "lowerEqual";
+            // Pattern 0 (Low): King → "lower" (can't go lowerEqual from the top);
+            // Ace → "equal" (can't go lower from the bottom); every other card → "lowerEqual".
+            if (p == 0)
+            {
+                if (rankU == "K") return "lower";
+                if (rankU == "A") return "equal";
+                return "lowerEqual";
+            }
 
             // Pattern 2 always sends "equal" — applies to any card including A and K.
             if (p == 2) return "equal";
