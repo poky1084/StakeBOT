@@ -33,7 +33,9 @@ namespace StakeBotUI
         public decimal StopDiceResultValue   { get; set; } = 0m;
 
         /// <summary>Diamonds only: stop when the 5-color pattern you set results in a win.</summary>
-        public bool    StopOnDiamondsWin     { get; set; } = false;
+        public bool    StopOnDiamondsWin        { get; set; } = false;
+        /// <summary>Diamonds only: when true, pattern match is order-independent (any permutation counts).</summary>
+        public bool    StopOnDiamondsWinAnyOrder { get; set; } = false;
 
         // ─── Per-game condition blocks ──────────────────────────────────────────
         public Dictionary<string, List<ConditionBlockData>> GameConditions { get; set; }

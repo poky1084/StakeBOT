@@ -234,7 +234,7 @@ namespace StakeBotUI
 
             if (!_shouldStop && _s.SelectedGame == "diamonds" && _s.StopOnDiamondsWin)
             {
-                bool matched = DiamondPatternMatches(_s.DiamondsColors, result.ResultColors);
+                bool matched = DiamondPatternMatches(_s.DiamondsColors, result.ResultColors, _s.StopOnDiamondsWinAnyOrder);
                 if (matched || ((result.ResultColors == null || result.ResultColors.Count == 0) && result.Win))
                 {
                     _shouldStop = true;
@@ -1484,7 +1484,7 @@ namespace StakeBotUI
         /// e.g. selected="red,blue,green" (3 colors) → result hand positions 0,1,2 must be red,blue,green.
         /// If 5 colors are selected all 5 result positions must match in order.
         /// </summary>
-        private static bool DiamondPatternMatches(string selected, List<string> resultColors)
+        private static bool DiamondPatternMatches(string selected, List<string> resultColors, bool anyOrder = false)
         {
             if (string.IsNullOrWhiteSpace(selected) || resultColors == null || resultColors.Count == 0)
                 return false;
@@ -1494,8 +1494,22 @@ namespace StakeBotUI
 
             if (sel.Length == 0 || resultColors.Count < sel.Length) return false;
 
+            if (anyOrder)
+            {
+                // Every color in the pattern must appear somewhere in the full result hand
+                // (duplicates in pattern require the same count in the result)
+                var selGroups = sel.GroupBy(c => c).ToDictionary(g => g.Key, g => g.Count());
+                var resGroups = resultColors.Select(c => c.ToLower())
+                                            .GroupBy(c => c).ToDictionary(g => g.Key, g => g.Count());
+                foreach (var kv in selGroups)
+                    if (!resGroups.TryGetValue(kv.Key, out int cnt) || cnt < kv.Value)
+                        return false;
+                return true;
+            }
+
+            // Exact order: pattern must match result from position 0
             for (int i = 0; i < sel.Length; i++)
-                if (sel[i] != resultColors[i]) return false;
+                if (sel[i] != resultColors[i].ToLower()) return false;
 
             return true;
         }

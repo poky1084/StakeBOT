@@ -1423,6 +1423,7 @@ namespace StakeBotUI
 								: (int)nudTomeLines.Value;
             _s.DiamondsColors   = txtDiamondColors.Text;
             _s.StopOnDiamondsWin= chkStopDiamondsWin.Checked;
+            _s.StopOnDiamondsWinAnyOrder = chkStopDiamondsAnyOrder.Checked;
             _s.CasesDifficulty  = cmbCasesDiff.SelectedItem?.ToString();
             _s.RpsGuesses       = "[\"" + txtRpsGuesses.Text.Replace(",", "\",\"") + "\"]";
             _s.FlipGuesses      = "[\"" + txtFlipGuesses.Text.Replace(",", "\",\"") + "\"]";
@@ -1493,6 +1494,7 @@ namespace StakeBotUI
                 lblDiamondCount.Text     = $"{_selectedDiamondColors.Count} / 5 selected";
             }
             chkStopDiamondsWin.Checked = _s.StopOnDiamondsWin;
+            chkStopDiamondsAnyOrder.Checked = _s.StopOnDiamondsWinAnyOrder;
             SC(cmbCasesDiff, _s.CasesDifficulty);
             ST(txtRpsGuesses,  (_s.RpsGuesses  ?? "rock" ).Trim('[',']').Replace("\"",""));
             ST(txtFlipGuesses, (_s.FlipGuesses ?? "heads").Trim('[',']').Replace("\"",""));

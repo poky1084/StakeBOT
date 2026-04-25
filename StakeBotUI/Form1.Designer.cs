@@ -168,6 +168,7 @@ namespace StakeBotUI
             this.txtDiamondColors = new System.Windows.Forms.TextBox();
             this.lblDiamondCount = new System.Windows.Forms.Label();
             this.chkStopDiamondsWin = new System.Windows.Forms.CheckBox();
+            this.chkStopDiamondsAnyOrder = new System.Windows.Forms.CheckBox();
             this.panelCases = new System.Windows.Forms.Panel();
             this.lblCasesTitle = new System.Windows.Forms.Label();
             this.lblCasesDiffLbl = new System.Windows.Forms.Label();
@@ -1917,6 +1918,7 @@ namespace StakeBotUI
             this.panelDiamonds.Controls.Add(this.txtDiamondColors);
             this.panelDiamonds.Controls.Add(this.lblDiamondCount);
             this.panelDiamonds.Controls.Add(this.chkStopDiamondsWin);
+            this.panelDiamonds.Controls.Add(this.chkStopDiamondsAnyOrder);
             this.panelDiamonds.Location = new System.Drawing.Point(0, 0);
             this.panelDiamonds.Name = "panelDiamonds";
             this.panelDiamonds.Size = new System.Drawing.Size(358, 461);
@@ -2092,10 +2094,19 @@ namespace StakeBotUI
             // 
             this.chkStopDiamondsWin.Location = new System.Drawing.Point(4, 190);
             this.chkStopDiamondsWin.Name = "chkStopDiamondsWin";
-            this.chkStopDiamondsWin.Size = new System.Drawing.Size(346, 22);
+            this.chkStopDiamondsWin.Size = new System.Drawing.Size(129, 26);
             this.chkStopDiamondsWin.TabIndex = 13;
             this.chkStopDiamondsWin.Text = "Stop on pattern";
             this.chkStopDiamondsWin.CheckedChanged += new System.EventHandler(this.QueueSave);
+            // 
+            // chkStopDiamondsAnyOrder
+            // 
+            this.chkStopDiamondsAnyOrder.Location = new System.Drawing.Point(149, 190);
+            this.chkStopDiamondsAnyOrder.Name = "chkStopDiamondsAnyOrder";
+            this.chkStopDiamondsAnyOrder.Size = new System.Drawing.Size(90, 22);
+            this.chkStopDiamondsAnyOrder.TabIndex = 14;
+            this.chkStopDiamondsAnyOrder.Text = "Any order";
+            this.chkStopDiamondsAnyOrder.CheckedChanged += new System.EventHandler(this.QueueSave);
             // 
             // panelCases
             // 
@@ -3250,6 +3261,7 @@ namespace StakeBotUI
         private System.Windows.Forms.Button    btnDiamondRed, btnDiamondYellow, btnDiamondGreen, btnDiamondCyan, btnDiamondBlue, btnDiamondOrange, btnDiamondPurple, btnDiamondsClear;
         private System.Windows.Forms.TextBox   txtDiamondColors;
         private System.Windows.Forms.CheckBox  chkStopDiamondsWin;
+        private System.Windows.Forms.CheckBox  chkStopDiamondsAnyOrder;
         // CASES
         private System.Windows.Forms.Label     lblCasesTitle, lblCasesDiffLbl;
         private System.Windows.Forms.ComboBox  cmbCasesDiff;
