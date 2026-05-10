@@ -841,7 +841,7 @@ namespace StakeBotUI
             131072});
             this.nudStopDiceResult.Location = new System.Drawing.Point(175, 105);
             this.nudStopDiceResult.Maximum = new decimal(new int[] {
-            9999,
+            10000,
             0,
             0,
             131072});
@@ -879,7 +879,7 @@ namespace StakeBotUI
             131072});
             this.nudStopDiceResult2.Location = new System.Drawing.Point(175, 150);
             this.nudStopDiceResult2.Maximum = new decimal(new int[] {
-            9999,
+            10000,
             0,
             0,
             131072});
@@ -2849,7 +2849,7 @@ namespace StakeBotUI
             131072});
             this.nudPDStopRoll1.Location = new System.Drawing.Point(164, 111);
             this.nudPDStopRoll1.Maximum = new decimal(new int[] {
-            9999,
+            10000,
             0,
             0,
             131072});
@@ -2868,7 +2868,7 @@ namespace StakeBotUI
             131072});
             this.nudPDStopRoll2.Location = new System.Drawing.Point(164, 137);
             this.nudPDStopRoll2.Maximum = new decimal(new int[] {
-            9999,
+            10000,
             0,
             0,
             131072});
