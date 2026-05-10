@@ -222,7 +222,11 @@ namespace StakeBotUI
 
             if (!_shouldStop && _s.SelectedGame == "dice" && _s.StopOnDiceResult && result.RollResult > 0
                 && Math.Round(result.RollResult, 2, MidpointRounding.AwayFromZero) == Math.Round(_s.StopDiceResultValue, 2, MidpointRounding.AwayFromZero))
-            { _shouldStop = true; _log?.Invoke($"[STOP] Dice {result.RollResult:F2} = target"); }
+            { _shouldStop = true; _log?.Invoke($"[STOP] Dice roll {result.RollResult:F2} = target 1"); }
+
+            if (!_shouldStop && _s.SelectedGame == "dice" && _s.StopOnDiceResult2 && result.RollResult > 0
+                && Math.Round(result.RollResult, 2, MidpointRounding.AwayFromZero) == Math.Round(_s.StopDiceResultValue2, 2, MidpointRounding.AwayFromZero))
+            { _shouldStop = true; _log?.Invoke($"[STOP] Dice roll {result.RollResult:F2} = target 2"); }
 
             if (!_shouldStop && _s.SelectedGame == "primedice" && result.RollResult > 0)
             {
@@ -604,7 +608,7 @@ namespace StakeBotUI
                 var (cashBet, cashErr, cashErrType) = ExtractBet(cashJson);
                 if (cashErr != null) return ErrorResult("hilo", cashErr, cashErrType);
                 var cashResult = MakeResult(cashBet, "hilo", $"pattern={patternDesc}|cashout", cardSeq);
-                // Card filter was active and all cards passed — stop the bot.
+                // Stop when: suit/color filter passed all cards through, OR "Pattern end" mode selected.
                 if (hiloSuitMode != "None") cashResult.RequestStop = true;
                 return cashResult;
             }

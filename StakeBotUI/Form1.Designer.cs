@@ -65,6 +65,8 @@ namespace StakeBotUI
             this.chkStopDiceResult = new System.Windows.Forms.CheckBox();
             this.nudStopDiceResult = new System.Windows.Forms.NumericUpDown();
             this.lblDiceResultHint = new System.Windows.Forms.Label();
+            this.chkStopDiceResult2 = new System.Windows.Forms.CheckBox();
+            this.nudStopDiceResult2 = new System.Windows.Forms.NumericUpDown();
             this.panelLimbo = new System.Windows.Forms.Panel();
             this.lblLimboTitle = new System.Windows.Forms.Label();
             this.lblLimboTarget = new System.Windows.Forms.Label();
@@ -256,6 +258,7 @@ namespace StakeBotUI
             this.panelDice.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudDiceChance)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudStopDiceResult)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudStopDiceResult2)).BeginInit();
             this.panelLimbo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudLimboTarget)).BeginInit();
             this.panelHilo.SuspendLayout();
@@ -729,6 +732,8 @@ namespace StakeBotUI
             this.panelDice.Controls.Add(this.chkStopDiceResult);
             this.panelDice.Controls.Add(this.nudStopDiceResult);
             this.panelDice.Controls.Add(this.lblDiceResultHint);
+            this.panelDice.Controls.Add(this.chkStopDiceResult2);
+            this.panelDice.Controls.Add(this.nudStopDiceResult2);
             this.panelDice.Location = new System.Drawing.Point(0, 0);
             this.panelDice.Name = "panelDice";
             this.panelDice.Size = new System.Drawing.Size(358, 461);
@@ -821,9 +826,9 @@ namespace StakeBotUI
             // 
             this.chkStopDiceResult.Location = new System.Drawing.Point(8, 107);
             this.chkStopDiceResult.Name = "chkStopDiceResult";
-            this.chkStopDiceResult.Size = new System.Drawing.Size(140, 22);
+            this.chkStopDiceResult.Size = new System.Drawing.Size(160, 22);
             this.chkStopDiceResult.TabIndex = 7;
-            this.chkStopDiceResult.Text = "Stop on exact roll:";
+            this.chkStopDiceResult.Text = "1. Stop on exact roll:";
             this.chkStopDiceResult.CheckedChanged += new System.EventHandler(this.QueueSave);
             // 
             // nudStopDiceResult
@@ -834,14 +839,14 @@ namespace StakeBotUI
             0,
             0,
             131072});
-            this.nudStopDiceResult.Location = new System.Drawing.Point(152, 105);
+            this.nudStopDiceResult.Location = new System.Drawing.Point(175, 105);
             this.nudStopDiceResult.Maximum = new decimal(new int[] {
             9999,
             0,
             0,
             131072});
             this.nudStopDiceResult.Name = "nudStopDiceResult";
-            this.nudStopDiceResult.Size = new System.Drawing.Size(100, 22);
+            this.nudStopDiceResult.Size = new System.Drawing.Size(80, 22);
             this.nudStopDiceResult.TabIndex = 8;
             this.nudStopDiceResult.ValueChanged += new System.EventHandler(this.QueueSave);
             // 
@@ -854,6 +859,34 @@ namespace StakeBotUI
             this.lblDiceResultHint.Size = new System.Drawing.Size(340, 16);
             this.lblDiceResultHint.TabIndex = 9;
             this.lblDiceResultHint.Text = "(matches rolled number, e.g. 55.67)";
+            // 
+            // chkStopDiceResult2
+            // 
+            this.chkStopDiceResult2.Location = new System.Drawing.Point(8, 152);
+            this.chkStopDiceResult2.Name = "chkStopDiceResult2";
+            this.chkStopDiceResult2.Size = new System.Drawing.Size(160, 22);
+            this.chkStopDiceResult2.TabIndex = 10;
+            this.chkStopDiceResult2.Text = "2. Stop on exact roll:";
+            this.chkStopDiceResult2.CheckedChanged += new System.EventHandler(this.QueueSave);
+            // 
+            // nudStopDiceResult2
+            // 
+            this.nudStopDiceResult2.DecimalPlaces = 2;
+            this.nudStopDiceResult2.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.nudStopDiceResult2.Location = new System.Drawing.Point(175, 150);
+            this.nudStopDiceResult2.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            131072});
+            this.nudStopDiceResult2.Name = "nudStopDiceResult2";
+            this.nudStopDiceResult2.Size = new System.Drawing.Size(80, 22);
+            this.nudStopDiceResult2.TabIndex = 11;
+            this.nudStopDiceResult2.ValueChanged += new System.EventHandler(this.QueueSave);
             // 
             // panelLimbo
             // 
@@ -1071,7 +1104,8 @@ namespace StakeBotUI
             this.cmbHiloSuitMode.Items.AddRange(new object[] {
             "None",
             "All same color",
-            "All same suit"});
+            "All same suit",
+            "Pattern"});
             this.cmbHiloSuitMode.Location = new System.Drawing.Point(80, 167);
             this.cmbHiloSuitMode.Name = "cmbHiloSuitMode";
             this.cmbHiloSuitMode.Size = new System.Drawing.Size(150, 24);
@@ -3093,6 +3127,7 @@ namespace StakeBotUI
             this.panelDice.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.nudDiceChance)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudStopDiceResult)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudStopDiceResult2)).EndInit();
             this.panelLimbo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.nudLimboTarget)).EndInit();
             this.panelHilo.ResumeLayout(false);
@@ -3195,6 +3230,8 @@ namespace StakeBotUI
         private System.Windows.Forms.NumericUpDown nudDiceChance;
         private System.Windows.Forms.CheckBox  chkStopDiceResult;
         private System.Windows.Forms.NumericUpDown nudStopDiceResult;
+        private System.Windows.Forms.CheckBox  chkStopDiceResult2;
+        private System.Windows.Forms.NumericUpDown nudStopDiceResult2;
         // LIMBO
         private System.Windows.Forms.Label     lblLimboTitle, lblLimboTarget;
         private System.Windows.Forms.NumericUpDown nudLimboTarget;

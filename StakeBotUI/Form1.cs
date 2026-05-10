@@ -1395,6 +1395,8 @@ namespace StakeBotUI
             _s.DiceChance       = nudDiceChance.Value;
             _s.StopOnDiceResult     = chkStopDiceResult.Checked;
             _s.StopDiceResultValue  = nudStopDiceResult.Value;
+            _s.StopOnDiceResult2    = chkStopDiceResult2.Checked;
+            _s.StopDiceResultValue2 = nudStopDiceResult2.Value;
             _s.LimboTarget      = nudLimboTarget.Value;
             _s.HiloPattern      = txtHiloPattern.Text;
             _s.HiloStartCardRank= cmbHiloStartCard.SelectedItem?.ToString() ?? "";
@@ -1470,6 +1472,7 @@ namespace StakeBotUI
             rbDiceOver.Checked = _s.DiceBetHigh; rbDiceUnder.Checked = !_s.DiceBetHigh;
             SS(nudDiceChance, _s.DiceChance);
             chkStopDiceResult.Checked = _s.StopOnDiceResult; SS(nudStopDiceResult, _s.StopDiceResultValue);
+            chkStopDiceResult2.Checked = _s.StopOnDiceResult2; SS(nudStopDiceResult2, _s.StopDiceResultValue2);
             SS(nudLimboTarget, _s.LimboTarget);
             ST(txtHiloPattern, _s.HiloPattern);
             // Hilo rank/suit: default to "A"/"C"; an empty saved value (old settings

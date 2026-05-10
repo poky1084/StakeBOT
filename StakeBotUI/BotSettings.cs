@@ -28,9 +28,13 @@ namespace StakeBotUI
         public bool    StopOnMultiplier      { get; set; } = false;
         public decimal StopMultiplierValue   { get; set; } = 500m;
 
-        /// <summary>Dice only: stop when the rolled number exactly matches this value.</summary>
+        /// <summary>Dice only: stop when the rolled number exactly matches this value (slot 1).</summary>
         public bool    StopOnDiceResult      { get; set; } = false;
         public decimal StopDiceResultValue   { get; set; } = 0m;
+
+        /// <summary>Dice only: stop when the rolled number exactly matches this value (slot 2).</summary>
+        public bool    StopOnDiceResult2     { get; set; } = false;
+        public decimal StopDiceResultValue2  { get; set; } = 0m;
 
         /// <summary>Diamonds only: stop when the 5-color pattern you set results in a win.</summary>
         public bool    StopOnDiamondsWin        { get; set; } = false;
