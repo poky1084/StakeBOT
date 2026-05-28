@@ -2294,7 +2294,8 @@ namespace StakeBotUI
             "easy",
             "medium",
             "hard",
-            "expert"});
+            "expert",
+            "master"});
             this.cmbSnakesDiff.Location = new System.Drawing.Point(78, 29);
             this.cmbSnakesDiff.Name = "cmbSnakesDiff";
             this.cmbSnakesDiff.Size = new System.Drawing.Size(130, 24);
